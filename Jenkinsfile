@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 sh -c "
+                    docker run --rm -v "$PWD":/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 sh -c "
                     dotnet add package xunit    &&
                     dotnet add package Microsoft.NET.Test.Sdk &&
                     dotnet add package xunit.runner.visualstudio &&
