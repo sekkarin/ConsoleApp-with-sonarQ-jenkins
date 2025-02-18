@@ -44,7 +44,11 @@ pipeline {
             }
         }
         stage("Deploy"){
-            sh 'echo "Deploy..........."'
+           steps{
+            script{
+                 sh 'echo "Deploy..........."'
+            }
+           }
         }
     }
 }
