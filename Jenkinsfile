@@ -17,7 +17,7 @@ pipeline {
                     dotnet add package Microsoft.NET.Test.Sdk &&
                     dotnet add package xunit.runner.visualstudio &&
                     dotnet tool install --global JetBrains.dotCover.GlobalTool &&
-                    export PATH="\$PATH:/root/.dotnet/tools" &&
+                    export PATH="$PATH:/root/.dotnet/tools" &&
                     dotnet restore &&
                     dotnet build --no-restore &&
                     dotnet dotcover test --dcReportType=XML'
