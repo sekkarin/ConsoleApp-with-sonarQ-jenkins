@@ -20,7 +20,7 @@ pipeline {
                     export PATH="$PATH:/root/.dotnet/tools" &&
                     dotnet restore &&
                     dotnet build --no-restore &&
-                    dotnet dotcover test --dcReportType=HTML'
+                    dotnet dotcover test --dcReportType=XML'
                     """
                 }
             }
@@ -37,7 +37,7 @@ pipeline {
                         sh "cd ConsoleApp1 && ${SCANNER_HOME}/bin/sonar-scanner \
                             -Dsonar.projectKey=CS-calculator \
                             -Dsonar.sources=. \
-                            -Dsonar.cs.dotcover.reportsPaths=dotCover.Output.html" \
+                            -Dsonar.cs.dotcover.reportsPaths=dotCover.Output.xml" \
                     }
                 }
             }
