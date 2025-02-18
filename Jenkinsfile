@@ -22,6 +22,7 @@ pipeline {
                     dotnet restore &&
                     dotnet build --no-incremental &&
                     dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+                    '
                     """
                 }
             }
