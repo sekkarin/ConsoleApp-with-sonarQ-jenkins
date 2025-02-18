@@ -16,7 +16,7 @@ pipeline {
                     withSonarQubeEnv('sonatqube-server') {
                         sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=CS-calculator \
-                            -Dsonar.sources=."
+                            -Dsonar.sources=ConsoleApp1"
                     }
                 }
             }
