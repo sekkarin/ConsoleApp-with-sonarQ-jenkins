@@ -13,14 +13,15 @@ pipeline {
                     sh """
                     docker run --rm -v "${env.WORKSPACE}:/app" -w /app mcr.microsoft.com/dotnet/sdk:9.0 sh -c '
                     cd ConsoleApp1 &&
+                    apt-get update && apt-get install -y libc6 libxml2 &&
                     dotnet add package xunit &&
                     dotnet add package Microsoft.NET.Test.Sdk &&
                     dotnet add package xunit.runner.visualstudio &&
-                    dotnet tool install --global JetBrains.dotCover.GlobalTool &&
+                    dotnet tool install --global dotnet-coverage &&
                     export PATH="$PATH:/root/.dotnet/tools" &&
                     dotnet restore &&
                     dotnet build --no-incremental &&
-                    dotnet dotcover test --dcReportType=DetailedXML'
+                    dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
                     """
                 }
             }
@@ -37,7 +38,7 @@ pipeline {
                         sh "cd ConsoleApp1 && ${SCANNER_HOME}/bin/sonar-scanner \
                             -Dsonar.projectKey=CS-calculator \
                             -Dsonar.sources=. \
-                            -Dsonar.cs.dotcover.reportsPaths=dotCover.Output.xml" \
+                            -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml" \
                     }
                 }
             }
