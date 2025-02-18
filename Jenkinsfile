@@ -19,6 +19,7 @@ pipeline {
                     dotnet restore &&
                     dotnet build --no-restore &&
                     dotnet test --collect "Code Coverage"
+                    '
                     """
                 }
             }
