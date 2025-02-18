@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:7.0'  // Use official .NET SDK image
+            args '--user root'  // Run as root to avoid permission issues
+        }
+    }
     
     stages {
         stage('Fetch Code') {
