@@ -4,7 +4,7 @@ pipeline {
     environment {
         ZAP_IMAGE = 'zaproxy/zap-stable'  // OWASP ZAP Docker image
         TARGET_URL = 'http://localhost:80'  // URL of the app you want to scan
-        ZAP_PORT = '8081'  // Port that ZAP will use
+        ZAP_PORT = '80'  // Port that ZAP will use
         ZAP_WAIT_TIME = '30'  // Wait for ZAP container to initialize
     }
 
@@ -58,7 +58,7 @@ pipeline {
 
                     // Run ZAP in the background as a Docker container
                     sh '''
-                        docker run -d --name zap -p 8080:8080 $ZAP_IMAGE
+                        docker run -d --name zap -p 8081:8080 $ZAP_IMAGE
                         sleep $ZAP_WAIT_TIME  # Wait for ZAP to initialize
                         docker exec zap zap-baseline.py -t $TARGET_URL -g genhtml -o /zap/wrk/spider_report
                     '''
