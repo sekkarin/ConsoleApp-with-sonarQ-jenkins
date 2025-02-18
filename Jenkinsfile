@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/dotnet/sdk:7.0'  // Use official .NET SDK image
-            args '--user root'  // Run as root to avoid permission issues
-        }
-    }
+    agent any
     
     stages {
         stage('Fetch Code') {
@@ -12,25 +7,18 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sekkarin/ConsoleApp-with-sonarQ-jenkins.git']])
             }
         }
-         stage('Restore Dependencies') {
+        stage('Build & Test in Docker') {
             steps {
                 script {
-                    sh 'dotnet restore'
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                script {
-                    sh 'dotnet build --no-restore'
-                }
-            }
-        }
-        stage('Run Tests') {
-            steps {
-                script {
-                    sh 'cd ConsoleApp1'
-                    sh 'dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"'
+                    sh '''
+                    docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:7.0 sh -c "
+                    dotnet add package xunit    &&
+                    dotnet add package Microsoft.NET.Test.Sdk &&
+                    dotnet add package xunit.runner.visualstudio &&
+                    dotnet tool install --global dotnet-coverage &&
+                    export PATH=\"$PATH:/root/.dotnet/tools\" &&
+                    dotnet restore && dotnet build --no-restore && dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml""
+                    '''
                 }
             }
         }
