@@ -1,5 +1,6 @@
 ﻿public class Calculator
 {
+    // Calculate
     public double Calculate(double num1, double num2, char op)
     {
         switch (op)
