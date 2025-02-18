@@ -11,7 +11,8 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker run --rm -v "${env.WORKSPACE}:/app" -w /app mcr.microsoft.com/dotnet/sdk:8.0 sh -c '
+                    docker run --rm -v "${env.WORKSPACE}:/app" -w /app mcr.microsoft.com/dotnet/sdk:9.0 sh -c '
+                    cd ConsoleApp1 &&
                     dotnet add package xunit &&
                     dotnet add package Microsoft.NET.Test.Sdk &&
                     dotnet add package xunit.runner.visualstudio &&
