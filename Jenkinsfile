@@ -43,5 +43,8 @@ pipeline {
                 }
             }
         }
+        stage("Deploy"){
+            sh 'echo "Deploy..........."'
+        }
     }
 }
