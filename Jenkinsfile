@@ -19,7 +19,7 @@ pipeline {
                     dotnet tool install --global JetBrains.dotCover.GlobalTool &&
                     export PATH="$PATH:/root/.dotnet/tools" &&
                     dotnet restore &&
-                    dotnet build --no-restore &&
+                    dotnet build –no-incremental &&
                     dotnet dotcover test --dcReportType=XML'
                     """
                 }
