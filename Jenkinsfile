@@ -38,8 +38,7 @@ pipeline {
                     withSonarQubeEnv('sonatqube-server') {
                         sh "cd ConsoleApp1 && ${SCANNER_HOME}/bin/sonar-scanner \
                             -Dsonar.projectKey=CS-calculator \
-                            -Dsonar.sources=. \
-                            -Dsonar.cs.vscoveragexml.reportsPaths=coverage.xml" \
+                            -Dsonar.sources=." 
                     }
                 }
             }
