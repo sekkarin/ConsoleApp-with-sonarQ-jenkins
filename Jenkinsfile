@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Fetch Code') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sekkarin/ConsoleApp-with-sonarQ-jenkins.git']])
+                checkout scmGit(branches: [[name: '*/dast']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sekkarin/ConsoleApp-with-sonarQ-jenkins.git']])
             }
         }
         stage('Code Analysis') {
