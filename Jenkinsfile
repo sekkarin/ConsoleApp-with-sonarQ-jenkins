@@ -9,8 +9,10 @@ pipeline {
         }
         stage('Code Analysis') {
             environment {
-                scannerHome = tool 'scannerHome'
+                SCANNER_HOME = tool 'SonarScanner'  // Make sure 'SonarScanner' matches Jenkins tool name
+                SONARQUBE_SERVER = 'sonatqube-server'      // Make sure 'SonarQube' matches configured server in Jenkins
             }
+
             steps {
                 script {
                     withSonarQubeEnv('sonatqube-server') {
