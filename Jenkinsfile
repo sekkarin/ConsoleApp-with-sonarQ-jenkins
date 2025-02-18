@@ -16,8 +16,6 @@ pipeline {
                     dotnet add package xunit &&
                     dotnet add package Microsoft.NET.Test.Sdk &&
                     dotnet add package xunit.runner.visualstudio &&
-                    dotnet tool install --global coverlet.console &&
-                    export PATH="$PATH:/root/.dotnet/tools" &&
                     dotnet restore &&
                     dotnet build --no-restore &&
                     dotnet test --collect "Code Coverage"
