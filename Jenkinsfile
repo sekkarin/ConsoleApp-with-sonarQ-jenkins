@@ -18,7 +18,7 @@ pipeline {
                     dotnet add package xunit.runner.visualstudio &&
                     dotnet restore &&
                     dotnet build --no-restore &&
-                    dotnet test --collect "Code Coverage"
+                     dotnet test --collect "Code Coverage" --results-directory coverage
                     '
                     """
                 }
