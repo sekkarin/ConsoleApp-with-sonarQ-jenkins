@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv('sonatqube-server') {
-                        sh "${scannerHome}/bin/sonar-scanner \
+                        sh "${SCANNER_HOME}/bin/sonar-scanner \
                             -Dsonar.projectKey=CS-calculator \
                             -Dsonar.sources=ConsoleApp1"
                     }
