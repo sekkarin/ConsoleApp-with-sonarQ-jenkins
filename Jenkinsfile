@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        ZAP_IMAGE = 'owasp/zap2docker-stable'  // OWASP ZAP Docker image
+        TARGET_URL = 'http://localhost:80'  // URL of the app you want to scan
+        ZAP_PORT = '8080'  // Port that ZAP will use
+        ZAP_WAIT_TIME = '30'  // Wait for ZAP container to initialize
+    }
+
     stages {
         stage('Fetch Code') {
             steps {
@@ -46,7 +53,18 @@ pipeline {
         stage('Scan security') {
             steps {
                 script {
-                    sh '...'
+                    echo 'Running OWASP ZAP Docker container for security scan...'
+                    sh 'docker compose up --build'
+
+                    // Run ZAP in the background as a Docker container
+                    sh '''
+                        docker run -d --name zap -p 8080:8080 $ZAP_IMAGE
+                        sleep $ZAP_WAIT_TIME  # Wait for ZAP to initialize
+                        docker exec zap zap-baseline.py -t $TARGET_URL -g genhtml -o /zap/wrk/spider_report
+                    '''
+
+                    // Copy the ZAP report generated in the container to the Jenkins workspace
+                    sh 'docker cp zap:/zap/wrk/spider_report .'
                 }
             }
         }
