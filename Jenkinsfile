@@ -7,6 +7,28 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sekkarin/ConsoleApp-with-sonarQ-jenkins.git']])
             }
         }
+         stage('Restore Dependencies') {
+            steps {
+                script {
+                    sh 'dotnet restore'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'dotnet build --no-restore'
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                script {
+                    sh 'cd ConsoleApp1'
+                    sh 'dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"'
+                }
+            }
+        }
         stage('Code Analysis') {
             environment {
                 SCANNER_HOME = tool 'SonarScanner'  // Make sure 'SonarScanner' matches Jenkins tool name
