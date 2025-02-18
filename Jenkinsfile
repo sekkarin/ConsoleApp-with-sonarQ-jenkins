@@ -20,7 +20,7 @@ pipeline {
                     export PATH="$PATH:/root/.dotnet/tools" &&
                     dotnet restore &&
                     dotnet build --no-restore &&
-                    dotnet dotcover test --dcReportType=XML'
+                    dotnet dotcover test --dcReportType=HTML'
                     """
                 }
             }
